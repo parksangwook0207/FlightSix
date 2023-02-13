@@ -1,0 +1,9 @@
+#제외문서
+
+/Library
+/Logs
+/obj
+/Temp
+
+*.csproj
+*.sln
