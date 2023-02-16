@@ -69,6 +69,12 @@ public class Player : MonoBehaviour
     {
         PlayBullet pb = Instantiate(pbullet, transform);
         pb.SetPower(power);
+        pb.transform.localPosition = new Vector2(0f, 0.7f);
         pb.transform.SetParent(parent);
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        Destroy(collision.gameObject);
     }
 }

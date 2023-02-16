@@ -8,4 +8,8 @@ public class Wall : MonoBehaviour
     {
         Destroy(collision.gameObject); // 닿는 모든 걸 삭제
     }
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        Destroy(collision.gameObject);
+    }
 }

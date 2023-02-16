@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayBullet : MonoBehaviour
 {
-    private float speed = 3f;
+    private float speed = 7f;
     [HideInInspector] public float power = 0;
 
 

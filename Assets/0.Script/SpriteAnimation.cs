@@ -27,8 +27,6 @@ public class SpriteAnimation : MonoBehaviour
         if (sprites.Count == 0)
         {
             return;
-
-
         }
         delayTime += Time.deltaTime;
         if (delayTime > spriteDelayTime)
@@ -63,7 +61,6 @@ public class SpriteAnimation : MonoBehaviour
         Init();
         sprites = argSprites.ToList();
         spriteDelayTime = delayTime;
-
     }
                                                      // 오버라이드
     public void SetSprite(List<Sprite> argSprites, float delayTime, UnityAction action)
@@ -79,7 +76,6 @@ public class SpriteAnimation : MonoBehaviour
         Init();
         sr.sprite = sprite;
         StartCoroutine(ReturnSprite(argSprites, delayTime));
-
     }
     IEnumerator ReturnSprite(List<Sprite> argSprites, float delayTime)
     {
