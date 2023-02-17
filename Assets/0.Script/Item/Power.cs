@@ -2,16 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EasyEnemy : Enemy
+public class Power : Item
 {
     public override void Init()
     {
-        ed.speed = 1f;
-        ed.hp = 100f;
-        ed.isBoss = false;
-
-        player = FindObjectOfType<Player>();
-        
+        speed = 0.5f;
+        base.Init();
     }
 
     // Start is called before the first frame update
@@ -20,4 +16,5 @@ public class EasyEnemy : Enemy
         Init();
     }
 
+    
 }

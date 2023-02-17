@@ -2,14 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EasyEnemy : Enemy
+public class NormalEnemy : Enemy
 {
     public override void Init()
     {
-        ed.speed = 1f;
+        ed.speed = 0.8f;
         ed.hp = 100f;
         ed.isBoss = false;
-
         player = FindObjectOfType<Player>();
         
     }
@@ -19,5 +18,4 @@ public class EasyEnemy : Enemy
     {
         Init();
     }
-
 }

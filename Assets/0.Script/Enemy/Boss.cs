@@ -2,22 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EasyEnemy : Enemy
+public class Boss : Enemy
 {
     public override void Init()
     {
         ed.speed = 1f;
-        ed.hp = 100f;
-        ed.isBoss = false;
-
+        ed.hp = 1000f;
+        ed.isBoss = true;
         player = FindObjectOfType<Player>();
-        
+        GetComponent<SpriteAnimation>().SetSprite(explosionSprite, 0.1f, Die);
     }
-
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         Init();
     }
-
 }

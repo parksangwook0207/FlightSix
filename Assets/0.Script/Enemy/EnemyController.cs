@@ -24,7 +24,7 @@ public class EnemyController : MonoBehaviour
         {
             int rand = Random.Range(0, enemies.Length);
             Enemy enemy = Instantiate(enemies[rand], transform);
-            enemy.parent = eBullet;
+            enemy.SetParent(eBullet);
             enemy.transform.localPosition = new Vector2(Random.Range(-2.5f,2.5f), 0f);
             enemy.transform.SetParent(parent);
 

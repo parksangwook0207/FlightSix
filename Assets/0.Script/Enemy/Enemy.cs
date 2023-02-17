@@ -6,6 +6,7 @@ public struct EnemyData
 {
     public float speed;
     public float hp;
+    public bool isBoss;
 }
 
 public abstract class Enemy : MonoBehaviour
@@ -16,17 +17,39 @@ public abstract class Enemy : MonoBehaviour
 
     public List<Sprite> explosionSprite;
     public List<Sprite> noranSprite;
+   
     public Sprite hitSprite;
 
     protected private Player player;
-    public Transform parent;
+    protected Transform parent;
+
 
     public abstract void Init();
 
+    public virtual void SetParent(Transform parent)
+    {
+        this.parent = parent;
+    }
+
     public virtual void Move()
     {
-        if (ed.hp > 0)
-            transform.Translate(new Vector2(0f, -(Time.deltaTime * ed.speed)));
+       if (ed.isBoss)
+        {
+            if (transform.localPosition.y >= 3)
+            {
+                if (ed.hp > 0)
+                {
+                    transform.Translate(new Vector2(0f, -(Time.deltaTime * ed.speed)));
+                }
+            }
+        }
+       else
+        {
+            if (ed.hp > 0)
+            {
+                transform.Translate(new Vector2(0f, -(Time.deltaTime * ed.speed)));
+            }
+        }
     }
     float testTime = 0;
 
@@ -68,9 +91,13 @@ public abstract class Enemy : MonoBehaviour
                 GetComponent<SpriteAnimation>().SetSprite(hitSprite, noranSprite, 0.1f);
             }
         }
-    }   
+        Destroy(collision.gameObject);
+    }
     public void Die()
     {
+        ItemCon.Instace.Spwan(transform);
         Destroy(gameObject);
     }
+
+    
 }
