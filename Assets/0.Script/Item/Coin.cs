@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class Coin : Item
 {
+    public override void Get()
+    {
+        UiCon.Instance.Score += 10;
+    }
     public override void Init()
     {
         speed = 3f;

@@ -17,10 +17,7 @@ public class EnemyBullet : MonoBehaviour
         transform.Translate(new Vector2(0f, -(Time.deltaTime * speed)));
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        
-    }
+   
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.GetComponent<Player>())

@@ -16,7 +16,7 @@ public class Player : MonoBehaviour
     [SerializeField] private List<Sprite> rightSp;
 
     [SerializeField] private Transform parent;
-    [SerializeField] private PlayBullet pbullet;
+    [SerializeField] private GameObject pbullet;
 
 
     [SerializeField] private float power = 0f;
@@ -24,6 +24,7 @@ public class Player : MonoBehaviour
     private SpriteAnimation sa;
 
     private float speed = 3f;
+    private int bulletLeval = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -67,7 +68,7 @@ public class Player : MonoBehaviour
 
     void PlayBu()
     {
-        PlayBullet pb = Instantiate(pbullet, transform);
+        PlayBullet pb = Instantiate(pbullet, transform).GetComponent<PlayBullet>();
         pb.SetPower(power);
         pb.transform.localPosition = new Vector2(0f, 0.7f);
         pb.transform.SetParent(parent);
@@ -75,10 +76,16 @@ public class Player : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.GetComponent<Coin>())
+        if (collision.GetComponent<Item>())
         {
-            UiCon.Instance.Score += 10;
+            collision.GetComponent<Item>().Get();
+            if (collision.GetComponent<Power>())
+            {
+                bulletLeval++;
+                pbullet = Resources.Load< PlayBullet>($"pBullet{bulletLevel}");
+            }
         }
+
         Destroy(collision.gameObject);
     }
 }

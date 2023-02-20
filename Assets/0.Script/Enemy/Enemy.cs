@@ -7,21 +7,26 @@ public struct EnemyData
     public float speed;
     public float hp;
     public bool isBoss;
+    public float rotZ;
+    public int paIdx;
+    public bool isRot;
+
 }
 
 public abstract class Enemy : MonoBehaviour
 {
     public EnemyData ed = new EnemyData();
-    public Transform fireTrans;
+    public List<Transform> fireTrans;
     public EnemyBullet eBullet;
 
     public List<Sprite> explosionSprite;
     public List<Sprite> noranSprite;
-   
+
     public Sprite hitSprite;
 
     protected private Player player;
     protected Transform parent;
+
 
 
     public abstract void Init();
@@ -33,7 +38,7 @@ public abstract class Enemy : MonoBehaviour
 
     public virtual void Move()
     {
-       if (ed.isBoss)
+        if (ed.isBoss)
         {
             if (transform.localPosition.y >= 3)
             {
@@ -43,7 +48,7 @@ public abstract class Enemy : MonoBehaviour
                 }
             }
         }
-       else
+        else
         {
             if (ed.hp > 0)
             {
@@ -57,21 +62,108 @@ public abstract class Enemy : MonoBehaviour
     void Update()
     {
         Move();
+        ATTPatten();
 
-        if (player != null)
-        {
-            Vector2 vec = fireTrans.position - player.transform.position;
-            float angle = Mathf.Atan2(vec.y, vec.x) * Mathf.Rad2Deg;
-            fireTrans.rotation = Quaternion.AngleAxis(angle - 90, Vector3.forward);
-        }
-        testTime += Time.deltaTime;
-        if (testTime > 2f)
-        {
-            EnemyBullet bullet = Instantiate(eBullet, fireTrans);
-            bullet.transform.SetParent(parent);
-            testTime = 0;
-        }
+
     }
+
+    int fireIndex = 0;
+    private void ATTPatten()
+    {
+        switch (ed.paIdx)
+        {
+            case 0:
+                
+                
+                Vector2 vec = fireTrans[fireIndex].position - player.transform.position;
+                float angle = Mathf.Atan2(vec.y, vec.x) * Mathf.Rad2Deg;
+                fireTrans[fireIndex].rotation = Quaternion.AngleAxis(angle - 90, Vector3.forward);
+
+                
+                if (ed.paIdx == 0)
+                {
+                    if (player != null)
+                    {
+                        
+                        testTime += Time.deltaTime;
+                        if (Random.Range(0, 20) < 100)
+                        {
+                            PattenChange();
+                        }
+                        fireIndex++;
+                        if (fireTrans.Count-1 <= fireIndex)
+                        {
+                            fireIndex = 0;
+                        }
+                    }
+                }
+                break;
+            case 1:
+                testTime += Time.deltaTime;
+                if (testTime > 0.2f)
+                {
+                    transform.GetChild(1).transform.rotation = Quaternion.Euler(0f, 0f, ed.rotZ);
+                    ed.rotZ += 1f;
+                    testTime += Time.deltaTime;
+                    if (testTime > 3f)
+                    {
+                        EnemyBullet bullet = Instantiate(eBullet, fireTrans[fireIndex]);
+                        bullet.transform.SetParent(parent);
+                        testTime = 0;
+                    }
+                }
+                break;
+            case 2:
+                testTime += Time.deltaTime;
+                if (testTime > 0.2f)
+                {
+                    if (ed.isRot)
+                    {
+                        if (ed.rotZ >= 60)
+                        {
+                            ed.isRot = false;
+                        }
+                        ed.rotZ -= 10f;
+                    }
+                    else
+                    {
+                        if (ed.rotZ <= -60)
+                        {
+                            ed.isRot = true;
+                            if (Random.Range(0, 100) < 20)
+                            {
+                                PattenChange();
+                            }
+                        }
+                        ed.rotZ += 10f;
+                    }
+                    transform.GetChild(1).transform.rotation = Quaternion.Euler(0f, 0f, ed.rotZ);
+
+                    EnemyBullet bullet = Instantiate(eBullet, fireTrans[fireIndex]);
+                    bullet.transform.SetParent(parent);
+                    testTime = 0;
+                    
+
+                }
+                break;
+
+
+        }
+
+
+
+
+
+    }
+
+    private void PattenChange()
+    {
+        ed.rotZ = 0;
+        ed.isRot = false;
+        ed.paIdx = Random.Range(0, 3);
+    }
+
+
 
     // ÆøÆÄ ÀÎÆÑÆ®
     private void OnTriggerEnter2D(Collider2D collision)
@@ -99,5 +191,6 @@ public abstract class Enemy : MonoBehaviour
         Destroy(gameObject);
     }
 
-    
+
+
 }
