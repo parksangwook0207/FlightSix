@@ -29,6 +29,7 @@ public class ItemCon : MonoBehaviour
 
         // 조건 ? 참 : 거짓
         int itemIndex = rand <= 3 ? 0 : rand <= 10 ? 1 : 2;
+        itemIndex = 1;
 
         if (trans != null)
         {

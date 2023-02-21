@@ -11,7 +11,7 @@ public class Boss : Enemy
         ed.isBoss = true;
         ed.fireNormaltime = 1f;
         player = FindObjectOfType<Player>();
-        GetComponent<SpriteAnimation>().SetSprite(explosionSprite, 0.1f, Die);
+        GetComponent<SpriteAnimation>().SetSprite(noranSprite, 0.1f);
     }
     private void Start()
     {

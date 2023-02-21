@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class Power : Item
 {
+    public override void Get()
+    {
+
+    }
     public override void Init()
     {
         speed = 0.5f;

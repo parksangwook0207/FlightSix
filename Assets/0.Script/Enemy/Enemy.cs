@@ -4,6 +4,7 @@ using UnityEngine;
 
 public struct EnemyData
 {
+    public float fireNormaltime;        
     public float speed;
     public float hp;
     public bool isBoss;
@@ -40,7 +41,7 @@ public abstract class Enemy : MonoBehaviour
     {
         if (ed.isBoss)
         {
-            if (transform.localPosition.y >= 3)
+            if (transform.localPosition.y >= -3)
             {
                 if (ed.hp > 0)
                 {
@@ -56,7 +57,7 @@ public abstract class Enemy : MonoBehaviour
             }
         }
     }
-    float testTime = 0;
+    float fireTime = 0;
 
     // Update is called once per frame
     void Update()
@@ -70,60 +71,54 @@ public abstract class Enemy : MonoBehaviour
     int fireIndex = 0;
     private void ATTPatten()
     {
+        fireTime += Time.deltaTime;
         switch (ed.paIdx)
         {
             case 0:
-                
-                
                 Vector2 vec = fireTrans[fireIndex].position - player.transform.position;
                 float angle = Mathf.Atan2(vec.y, vec.x) * Mathf.Rad2Deg;
                 fireTrans[fireIndex].rotation = Quaternion.AngleAxis(angle - 90, Vector3.forward);
-
-                
-                if (ed.paIdx == 0)
+                if(fireTime > ed.fireNormaltime)
                 {
-                    if (player != null)
+                    CreateBullet(fireTrans[fireIndex]);
+                    if (Random.Range(0, 100) < 20)
                     {
-                        
-                        testTime += Time.deltaTime;
-                        if (Random.Range(0, 20) < 100)
-                        {
-                            PattenChange();
-                        }
-                        fireIndex++;
-                        if (fireTrans.Count-1 <= fireIndex)
-                        {
-                            fireIndex = 0;
-                        }
+                        PattenChange();
+                    }
+                    fireIndex++;
+                    if (fireTrans.Count <= fireIndex)
+                    {
+                        fireIndex = 0;
                     }
                 }
                 break;
             case 1:
-                testTime += Time.deltaTime;
-                if (testTime > 0.2f)
+                if (fireTime > 0.2f)
                 {
                     transform.GetChild(1).transform.rotation = Quaternion.Euler(0f, 0f, ed.rotZ);
-                    ed.rotZ += 1f;
-                    testTime += Time.deltaTime;
-                    if (testTime > 3f)
+                    ed.rotZ += 5f;
+                    CreateBullet(transform.GetChild(1).transform);
+                    if(ed.rotZ > 350)
                     {
-                        EnemyBullet bullet = Instantiate(eBullet, fireTrans[fireIndex]);
-                        bullet.transform.SetParent(parent);
-                        testTime = 0;
+                        PattenChange();
                     }
                 }
                 break;
             case 2:
-                testTime += Time.deltaTime;
-                if (testTime > 0.2f)
+                
+                if (fireTime > 0.2f)
                 {
                     if (ed.isRot)
                     {
                         if (ed.rotZ >= 60)
                         {
                             ed.isRot = false;
+                            if (Random.Range(0, 100) < 20)
+                            {
+                                PattenChange();
+                            }
                         }
-                        ed.rotZ -= 10f;
+                        ed.rotZ += 10f;
                     }
                     else
                     {
@@ -135,34 +130,34 @@ public abstract class Enemy : MonoBehaviour
                                 PattenChange();
                             }
                         }
-                        ed.rotZ += 10f;
+                        ed.rotZ -= 10f;
                     }
                     transform.GetChild(1).transform.rotation = Quaternion.Euler(0f, 0f, ed.rotZ);
 
-                    EnemyBullet bullet = Instantiate(eBullet, fireTrans[fireIndex]);
-                    bullet.transform.SetParent(parent);
-                    testTime = 0;
-                    
-
+                    CreateBullet(transform.GetChild(1).transform);
                 }
                 break;
-
-
         }
-
-
-
-
-
     }
 
     private void PattenChange()
     {
+        if (!ed.isBoss)
+        {
+            ed.paIdx = 0;
+            return;
+        }
         ed.rotZ = 0;
         ed.isRot = false;
         ed.paIdx = Random.Range(0, 3);
     }
 
+    private void CreateBullet(Transform trans)
+    {
+        EnemyBullet bullet = Instantiate(eBullet, fireTrans[fireIndex]);
+        bullet.transform.SetParent(parent);
+        fireTime = 0f;
+    }
 
 
     // ÆøÆÄ ÀÎÆÑÆ®
@@ -182,11 +177,16 @@ public abstract class Enemy : MonoBehaviour
             {
                 GetComponent<SpriteAnimation>().SetSprite(hitSprite, noranSprite, 0.1f);
             }
+            Destroy(collision.gameObject);
         }
-        Destroy(collision.gameObject);
     }
     public void Die()
     {
+        if (ed.isBoss)
+        {
+            EnemyController.Instance.StageUp();
+        }
+
         ItemCon.Instace.Spwan(transform);
         Destroy(gameObject);
     }

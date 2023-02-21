@@ -7,6 +7,7 @@ public class UiCon : MonoBehaviour
 {
     public static UiCon Instance;
     [SerializeField] private TMP_Text scoreTxt;
+    [SerializeField] PlayBoom pb;
 
     int score = 0;
     public int Score
@@ -29,5 +30,10 @@ public class UiCon : MonoBehaviour
         Score = 0;
     }
 
-    
+    public void OnFireBoom()
+    {
+        Debug.Log("폭파버튼이 감지 되었습니다.");
+        Instantiate(pb);
+    }
+
 }

@@ -24,7 +24,7 @@ public class Player : MonoBehaviour
     private SpriteAnimation sa;
 
     private float speed = 3f;
-    private int bulletLeval = 0;
+    private int bulletLevel = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -68,10 +68,17 @@ public class Player : MonoBehaviour
 
     void PlayBu()
     {
-        PlayBullet pb = Instantiate(pbullet, transform).GetComponent<PlayBullet>();
-        pb.SetPower(power);
-        pb.transform.localPosition = new Vector2(0f, 0.7f);
-        pb.transform.SetParent(parent);
+        GameObject obj = Instantiate(pbullet, transform.GetChild(0));
+        for (int i = 0; i < obj.transform.childCount; i++)
+        {
+            PlayBullet pb = obj.transform.GetChild(i).GetComponent<PlayBullet>();
+            pb.SetPower(power);
+            //pb.transform.localPosition = new Vector2(0f, 0.7f);
+            
+
+        }
+        obj.transform.SetParent(parent);
+
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -81,8 +88,12 @@ public class Player : MonoBehaviour
             collision.GetComponent<Item>().Get();
             if (collision.GetComponent<Power>())
             {
-                bulletLeval++;
-                pbullet = Resources.Load< PlayBullet>($"pBullet{bulletLevel}");
+                bulletLevel++;
+                if (bulletLevel > 3)
+                {
+                    bulletLevel = 3;
+                }
+                pbullet = Resources.Load< GameObject>($"pBullet {bulletLevel}");
             }
         }
 
