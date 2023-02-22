@@ -18,6 +18,8 @@ public class Player : MonoBehaviour
     [SerializeField] private Transform parent;
     [SerializeField] private GameObject pbullet;
 
+    [SerializeField] private List<SubPlayer> follows;
+
 
     [SerializeField] private float power = 0f;
 
@@ -25,6 +27,9 @@ public class Player : MonoBehaviour
 
     private float speed = 3f;
     private int bulletLevel = 0;
+    private int life = 3;
+
+    private int followIdx = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -32,12 +37,18 @@ public class Player : MonoBehaviour
         sa = GetComponent<SpriteAnimation>();
         sa.SetSprite(centerSp, 0.2f);
 
+        UiCon.Instance.LifeChange(life);
+
         InvokeRepeating("PlayBu", 1f, 0.2f);
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (life < 0)
+        {
+            return;
+        }
         // 캐릭터 이동범위 지정
         float x = Input.GetAxisRaw("Horizontal") * Time.deltaTime * speed;
         float clampX = Mathf.Clamp(transform.position.x + x, -2.28f, 2.28f);
@@ -93,10 +104,53 @@ public class Player : MonoBehaviour
                 {
                     bulletLevel = 3;
                 }
-                pbullet = Resources.Load< GameObject>($"pBullet {bulletLevel}");
+                pbullet = Resources.Load<GameObject>($"pBullet {bulletLevel}");
+            }
+            else if (collision.GetComponent<Follow>())
+            {
+                if (followIdx < follows.Count)
+                {
+                    follows[followIdx].gameObject.SetActive(true);
+                    followIdx++;
+                }
+                
+                
             }
         }
+        else if (collision.GetComponent<EnemyBullet>())
+        {
+            life--;
+            UiCon.Instance.LifeChange(life);
+            if (life > 0)
+            {
+                StartCoroutine("DieAnimtion");
+            }
+            else
+            {
+                CancelInvoke("PlayBu");
+                GetComponent<BoxCollider2D>().enabled = false;
+                GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 0);
+            }
 
+        }
         Destroy(collision.gameObject);
+    }
+
+    // 비행기가 깎일 때
+    IEnumerator DieAnimtion()
+    {
+        CancelInvoke("PlayBu");
+        GetComponent<BoxCollider2D>().enabled = false;
+        for (int i = 0; i < 5; i++)
+        {
+            GetComponent<BoxCollider2D>().enabled = false; ;
+            yield return new WaitForSeconds(0.2f);
+            GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 0.7f);
+        }
+        InvokeRepeating("PlayBu", 1f, 0.2f);
+        yield return new WaitForSeconds(0.2f);
+        GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 1f);
+        GetComponent<BoxCollider2D>().enabled = true;
+        
     }
 }

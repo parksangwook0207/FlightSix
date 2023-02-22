@@ -163,14 +163,23 @@ public abstract class Enemy : MonoBehaviour
     // ÆøÆÄ ÀÎÆÑÆ®
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.GetComponent<PlayBullet>())
+        if (collision.gameObject.GetComponent<PlayBullet>() ||
+            collision.gameObject.GetComponent<FollowBullet>())
         {
-            ed.hp -= collision.gameObject.GetComponent<PlayBullet>().power;
-
+            float power = 0;
+            if (collision.gameObject.GetComponent<PlayBullet>())
+            {
+                power = collision.gameObject.GetComponent<PlayBullet>().power;
+            }
+            else if (collision.gameObject.GetComponent<FollowBullet>())
+            {
+                power = collision.gameObject.GetComponent<FollowBullet>().power;
+            }
+            ed.hp -= power;
             if (ed.hp <= 0)
             {
                 GetComponent<BoxCollider2D>().enabled = false;
-                GetComponent<SpriteAnimation>().SetSprite(explosionSprite, 0.1f, Die);
+                GetComponent<SpriteAnimation>().SetSprite(explosionSprite, 0.05f, Die);
 
             }
             else
@@ -178,7 +187,11 @@ public abstract class Enemy : MonoBehaviour
                 GetComponent<SpriteAnimation>().SetSprite(hitSprite, noranSprite, 0.1f);
             }
             Destroy(collision.gameObject);
+        
         }
+
+        
+            
     }
     public void Die()
     {

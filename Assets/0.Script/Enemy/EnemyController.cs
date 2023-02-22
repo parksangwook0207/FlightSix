@@ -11,7 +11,7 @@ public class EnemyController : MonoBehaviour
     [SerializeField] private Transform eBullet;
 
     float delaySpawn = 100f;
-    int spawnCount = 0;
+    
     float nextDelay = 2f;
 
     
