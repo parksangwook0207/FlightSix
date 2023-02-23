@@ -11,6 +11,7 @@ public struct EnemyData
     public float rotZ;
     public int paIdx;
     public bool isRot;
+    public int score;
 
 }
 
@@ -201,6 +202,7 @@ public abstract class Enemy : MonoBehaviour
         }
 
         ItemCon.Instace.Spwan(transform);
+        UiCon.Instance.Score += ed.score;
         Destroy(gameObject);
     }
 
