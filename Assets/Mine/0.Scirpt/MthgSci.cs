@@ -2,12 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
+/// <summary>
+/// 5 x 5 생성 ㅇ
+/// 지뢰생성
+/// 지뢰에 가까울수록 숫자표현
+/// </summary>
 public class MthgSci : MonoBehaviour
 {
     public int height = 5, width = 5;
     public GameObject Mine;
     private GameObject[,] MineMap;
+    
+
+    [SerializeField] private Transform parent;
     // Start is called before the first frame update
     void Start()
     {
@@ -15,7 +24,7 @@ public class MthgSci : MonoBehaviour
         Create();
     }
 
-    void Create()
+    void Create() // 생성하는 곳
     {
         // 생성코드
         int starX = -width / 2;
@@ -31,9 +40,17 @@ public class MthgSci : MonoBehaviour
 
                 MineMap[i, o] = min;
 
-
+                min.transform.SetParent(parent);
             }
-        }
 
+        }
     }
+    void MineCreate()
+    {
+        
+    }
+
+
+
+
 }
