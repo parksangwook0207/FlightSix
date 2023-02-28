@@ -14,9 +14,14 @@ public class MthgSci : MonoBehaviour
     public int height = 5, width = 5;
     public GameObject Mine;
     private GameObject[,] MineMap;
-    
 
+    // 지뢰찾기 UI 생성되는 위치를 어디로 할 것인지
     [SerializeField] private Transform parent;
+
+    [SerializeField] private Transform Testim;
+    [SerializeField] private Transform Mineim;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -48,6 +53,12 @@ public class MthgSci : MonoBehaviour
     void MineCreate()
     {
         
+        // 지뢰 위치를 랜덤값으로 설정해주고 지뢰가 맞으면 지뢰 이미지를 띄우고 지뢰가 아니면 빈 이미지를 띄운다.
+        // bool
+         
+       
+       
+
     }
 
 
