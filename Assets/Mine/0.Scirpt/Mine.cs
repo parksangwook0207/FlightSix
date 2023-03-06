@@ -61,7 +61,7 @@ public class Mine : MonoBehaviour
 
         for (int i = 0; i < size; i++)
         {
-            mineList.Add(new List<NewMine>());
+            mineList.Add(new List<NewMine>()); // 생성코드
             for (int j = 0; j < size; j++)
             {
                 NewMine m = Instantiate(prefab, parent);
