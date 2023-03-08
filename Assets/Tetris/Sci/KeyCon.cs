@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class KeyCon : MonoBehaviour
 {
-    [SerializeField] private GameObject Block;
+    [SerializeField] private GameObject block;
 
     float moveX = 0;
     float moveY = 0;
@@ -15,24 +15,23 @@ public class KeyCon : MonoBehaviour
     float autoDownTime = 0;
 
 
-
     // Update is called once per frame
     void Update()
     {
         // 방향키 위에를 누를 시 변환
         if (Input.GetKeyDown(KeyCode.UpArrow))
         {
-            Block.transform.Rotate(Vector3.forward * 90 * -1);
+            block.transform.Rotate(Vector3.forward * 90 * -1);
         }
         else if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
             moveX -= 75f;
-            Block.transform.localPosition = new Vector3(moveX, moveY);
+            block.transform.localPosition = new Vector3(moveX, moveY);
         }
         else if (Input.GetKeyDown(KeyCode.RightArrow))
         {
             moveX += 75f;
-            Block.transform.localPosition = new Vector3(moveX, moveY);
+            block.transform.localPosition = new Vector3(moveX, moveY);
         }
         else if (Input.GetKeyDown(KeyCode.DownArrow))
         {
@@ -52,6 +51,6 @@ public class KeyCon : MonoBehaviour
     void BlockDown()
     {
         moveY -= 75.6f;
-        Block.transform.localPosition = new Vector3(moveX, moveY);
+        block.transform.localPosition = new Vector3(moveX, moveY);
     }
 }
