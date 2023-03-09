@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class KeyCon : MonoBehaviour
 {
-    [SerializeField] private GameObject block;
+   /* [SerializeField] private GameObject block;
 
     float moveX = 0;
     float moveY = 0;
@@ -53,4 +53,5 @@ public class KeyCon : MonoBehaviour
         moveY -= 75.6f;
         block.transform.localPosition = new Vector3(moveX, moveY);
     }
+   */
 }

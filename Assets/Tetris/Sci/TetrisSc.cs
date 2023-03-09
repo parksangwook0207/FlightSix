@@ -8,14 +8,14 @@ public class TetrisSc : MonoBehaviour
 {
     [SerializeField] private GameObject prefab;
     [SerializeField] private Transform parent;
-    [SerializeField] private GameObject prefab1;
-    [SerializeField] private Transform parent1;
+
+    [SerializeField] private GameObject prefabblock;
+    [SerializeField] private Transform parentblock;
+    
+
 
     public int BlockXCnt { get; set; }
     public int BlockYCnt { get; set; }
-
-
-    private Image newBlock;
 
     private Vector3 start;
 
@@ -44,15 +44,17 @@ public class TetrisSc : MonoBehaviour
     }
 
     IEnumerator Tetrisoff()
-    {
+    {    
         yield return new WaitForSeconds(0.2f);
         GetComponent<GridLayoutGroup>().enabled = false;
         start = tebox[BlockXCnt / 2].transform.localPosition;
-        prefab1.transform.localPosition = start;
+        prefabblock.transform.localPosition = start;
+        CreateBlockT();
     }
     
-    void CreateBlockT()
+    public void CreateBlockT()
     {
-        Instantiate(prefab1, parent1);
+        Instantiate(prefabblock,parentblock);        
     }
+    
 }
