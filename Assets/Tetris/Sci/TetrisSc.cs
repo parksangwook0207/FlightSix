@@ -38,7 +38,7 @@ public class TetrisSc : MonoBehaviour
         // 처음 10 * 20 생성
         for (int i = 0; i < BlockXCnt * BlockYCnt; i++)
         {
-            tebox.Add(Instantiate(prefab, parent));
+            tebox.Add(Instantiate(prefab, parent));           
         }
         StartCoroutine(Tetrisoff());
     }
@@ -48,8 +48,7 @@ public class TetrisSc : MonoBehaviour
         yield return new WaitForSeconds(0.2f);
         GetComponent<GridLayoutGroup>().enabled = false;
         start = tebox[BlockXCnt / 2].transform.localPosition;
-        prefabblock.transform.localPosition = start;
-        CreateBlockT();
+        prefabblock.transform.localPosition = start;     
     }
     
     public void CreateBlockT()

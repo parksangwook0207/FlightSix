@@ -6,12 +6,12 @@ using UnityEngine.UI;
 
 public class KeyCon : MonoBehaviour
 {
-   /* [SerializeField] private GameObject block;
+    [SerializeField] private GameObject block;
 
     float moveX = 0;
     float moveY = 0;
-    // Start is called before the first frame update
-
+   
+    // 블럭이 떨어지는 시간
     float autoDownTime = 0;
 
 
@@ -50,8 +50,9 @@ public class KeyCon : MonoBehaviour
     }
     void BlockDown()
     {
-        moveY -= 75.6f;
+        moveY -= 75f;
         block.transform.localPosition = new Vector3(moveX, moveY);
     }
-   */
+    
+   
 }
