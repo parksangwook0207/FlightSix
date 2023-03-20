@@ -54,7 +54,12 @@ public class TetrisSc : MonoBehaviour
     
     public void CreateBlockT()
     {
-        this.prefabblock = Instantiate(prefabblock,parentblock);        
+        GameObject pb = Instantiate(prefabblock, parentblock);
+        prefabblock = pb;
+        start = tebox[BlockXCnt / 2].transform.localPosition;
+        pb.transform.localPosition = start;
+        Debug.Log(prefabblock.transform.localPosition);
+        Debug.Log(start);
     }
-    
+
 }
