@@ -11,9 +11,8 @@ public class TetrisSc : MonoBehaviour
 
     [SerializeField] private GameObject prefabblock;
     [SerializeField] private Transform parentblock;
+   
     
-
-
     public int BlockXCnt { get; set; }
     public int BlockYCnt { get; set; }
 
@@ -45,6 +44,7 @@ public class TetrisSc : MonoBehaviour
 
     IEnumerator Tetrisoff()
     {    
+        // 처음생성될 때 칸에 딱 맞게 떨어지는 코드(?)
         yield return new WaitForSeconds(0.2f);
         GetComponent<GridLayoutGroup>().enabled = false;
         start = tebox[BlockXCnt / 2].transform.localPosition;
@@ -54,6 +54,7 @@ public class TetrisSc : MonoBehaviour
     
     public void CreateBlockT()
     {
+        
         GameObject pb = Instantiate(prefabblock, parentblock);
         prefabblock = pb;
         start = tebox[BlockXCnt / 2].transform.localPosition;
