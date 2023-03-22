@@ -6,10 +6,9 @@ using UnityEngine.UI;
 
 public class KeyCon : MonoBehaviour
 {
-    [SerializeField] private GameObject block;
+    public GameObject block;
 
-    float moveX = 0;
-    float moveY = 0;
+    [HideInInspector] public Vector2 movePos;
    
     // 블럭이 떨어지는 시간
     float autoDownTime = 0;
@@ -18,6 +17,9 @@ public class KeyCon : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (block == null)
+            return;
+
         // 방향키 위에를 누를 시 변환
         if (Input.GetKeyDown(KeyCode.UpArrow))
         {
@@ -25,13 +27,13 @@ public class KeyCon : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
-            moveX -= 75f;
-            block.transform.localPosition = new Vector3(moveX, moveY);
+            movePos.x -= 75f;
+            block.transform.localPosition = movePos;
         }
         else if (Input.GetKeyDown(KeyCode.RightArrow))
         {
-            moveX += 75f;
-            block.transform.localPosition = new Vector3(moveX, moveY);
+            movePos.x += 75f;
+            block.transform.localPosition = movePos;
         }
         else if (Input.GetKeyDown(KeyCode.DownArrow))
         {
@@ -39,20 +41,16 @@ public class KeyCon : MonoBehaviour
             autoDownTime = 0;
         }
         
-
         autoDownTime += Time.deltaTime;
-        if (autoDownTime > 0.5f)
+        if (autoDownTime > 1f)
         {
             autoDownTime = 0f;
             BlockDown();
         }
-
     }
     void BlockDown()
     {
-        moveY -= 75f;
-        block.transform.localPosition = new Vector3(moveX, moveY);
+        movePos.y -= 75f;
+        block.transform.localPosition = movePos;
     }
-    
-   
 }

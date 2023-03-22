@@ -4,15 +4,11 @@ using UnityEngine;
 
 public class ConManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public static ConManager Instance;
+    public KeyCon keyCont;
 
-    // Update is called once per frame
-    void Update()
+    private void Awake()
     {
-        
+        Instance = this;
     }
 }

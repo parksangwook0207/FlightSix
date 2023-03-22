@@ -6,9 +6,11 @@ using UnityEngine.UI;
 
 public class TetrisSc : MonoBehaviour
 {
+    // 이미지 프리팹 
     [SerializeField] private GameObject prefab;
     [SerializeField] private Transform parent;
 
+    // 블럭 프리팹
     [SerializeField] private GameObject prefabblock;
     [SerializeField] private Transform parentblock;
    
@@ -29,7 +31,6 @@ public class TetrisSc : MonoBehaviour
         GetComponent<GridLayoutGroup>().constraintCount = BlockXCnt;
 
         Tetrisnew();
-        CreateBlockT();
     }
 
     public void Tetrisnew()
@@ -47,20 +48,16 @@ public class TetrisSc : MonoBehaviour
         // 처음생성될 때 칸에 딱 맞게 떨어지는 코드(?)
         yield return new WaitForSeconds(0.2f);
         GetComponent<GridLayoutGroup>().enabled = false;
-        start = tebox[BlockXCnt / 2].transform.localPosition;
-        prefabblock.transform.localPosition = start;     
+
+        CreateBlockT();
     }
-   
     
     public void CreateBlockT()
     {
-        
         GameObject pb = Instantiate(prefabblock, parentblock);
-        prefabblock = pb;
         start = tebox[BlockXCnt / 2].transform.localPosition;
         pb.transform.localPosition = start;
-        Debug.Log(prefabblock.transform.localPosition);
-        Debug.Log(start);
+        ConManager.Instance.keyCont.block = pb;
+        ConManager.Instance.keyCont.movePos = new Vector2(start.x, start.y);
     }
-
 }
