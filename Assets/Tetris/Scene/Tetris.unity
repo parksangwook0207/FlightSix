@@ -153,6 +153,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   keyCont: {fileID: 241556245}
+  tc: {fileID: 1170480416}
 --- !u!4 &4827371
 Transform:
   m_ObjectHideFlags: 0
@@ -291,7 +292,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
-  m_AdditionalShaderChannelsFlag: 0
+  m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
@@ -459,7 +460,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 449be1e510639194691e2d3525edddf3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefab: {fileID: 2688709433194652845, guid: 245aa15398cb38840a869f14b4834531, type: 3}
+  prefab: {fileID: 3947500435225038335, guid: 245aa15398cb38840a869f14b4834531, type: 3}
   parent: {fileID: 1170480414}
   prefabblock: {fileID: 4955220621696904621, guid: c164001bb1a19f246a682b2ca4730e8b, type: 3}
   parentblock: {fileID: 1902419597}

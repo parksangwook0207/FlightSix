@@ -50,7 +50,13 @@ public class KeyCon : MonoBehaviour
     }
     void BlockDown()
     {
+        if (movePos.y == -712.5)
+        {
+            ConManager.Instance.tc.CreateBlockT();
+            return;
+        }
         movePos.y -= 75f;
         block.transform.localPosition = movePos;
     }
+
 }

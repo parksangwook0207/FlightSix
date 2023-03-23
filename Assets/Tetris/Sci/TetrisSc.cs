@@ -13,14 +13,17 @@ public class TetrisSc : MonoBehaviour
     // ºí·° ÇÁ¸®ÆÕ
     [SerializeField] private GameObject prefabblock;
     [SerializeField] private Transform parentblock;
-   
+
     
+
+
     public int BlockXCnt { get; set; }
     public int BlockYCnt { get; set; }
 
     private Vector3 start;
 
     private List<GameObject> tebox = new List<GameObject>();
+    
 
 
     void Start()
@@ -51,7 +54,7 @@ public class TetrisSc : MonoBehaviour
 
         CreateBlockT();
     }
-    
+
     public void CreateBlockT()
     {
         GameObject pb = Instantiate(prefabblock, parentblock);
@@ -59,5 +62,9 @@ public class TetrisSc : MonoBehaviour
         pb.transform.localPosition = start;
         ConManager.Instance.keyCont.block = pb;
         ConManager.Instance.keyCont.movePos = new Vector2(start.x, start.y);
+    }
+    public void StopMove()
+    {
+        
     }
 }
