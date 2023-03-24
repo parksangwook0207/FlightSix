@@ -6,8 +6,8 @@ using UnityEngine.UI;
 
 public class KeyCon : MonoBehaviour
 {
+    
     public GameObject block;
-
     [HideInInspector] public Vector2 movePos;
    
     // 블럭이 떨어지는 시간
@@ -40,7 +40,9 @@ public class KeyCon : MonoBehaviour
             BlockDown();
             autoDownTime = 0;
         }
+
         
+                 
         autoDownTime += Time.deltaTime;
         if (autoDownTime > 1f)
         {
@@ -55,8 +57,9 @@ public class KeyCon : MonoBehaviour
             ConManager.Instance.tc.CreateBlockT();
             return;
         }
+       
         movePos.y -= 75f;
-        block.transform.localPosition = movePos;
+        block.transform.localPosition = movePos;    
     }
 
 }

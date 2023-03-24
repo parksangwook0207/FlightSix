@@ -41,7 +41,7 @@ public class TetrisSc : MonoBehaviour
         // 처음 10 * 20 생성
         for (int i = 0; i < BlockXCnt * BlockYCnt; i++)
         {
-            tebox.Add(Instantiate(prefab, parent));           
+            tebox.Add(Instantiate(prefab, parent));
         }
         StartCoroutine(Tetrisoff());
     }
@@ -63,8 +63,5 @@ public class TetrisSc : MonoBehaviour
         ConManager.Instance.keyCont.block = pb;
         ConManager.Instance.keyCont.movePos = new Vector2(start.x, start.y);
     }
-    public void StopMove()
-    {
-        
-    }
+    
 }
