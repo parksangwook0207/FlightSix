@@ -169,9 +169,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   blocks:
   - {fileID: 4955220621696904621, guid: c164001bb1a19f246a682b2ca4730e8b, type: 3}
-  parent: {fileID: 1176317466}
+  parent: {fileID: 467545953}
   finishB: {fileID: 620877304}
-  overPanel: {fileID: 0}
   finishBlocks: []
 --- !u!1 &271626748
 GameObject:
@@ -218,6 +217,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   block: {fileID: 0}
+  autoDown: 0
+  downTime: 2
 --- !u!1 &467545949
 GameObject:
   m_ObjectHideFlags: 0
@@ -286,8 +287,8 @@ Canvas:
   m_GameObject: {fileID: 467545949}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 0
-  m_Camera: {fileID: 0}
+  m_RenderMode: 1
+  m_Camera: {fileID: 1958114422}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
@@ -468,7 +469,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5222bd0fec9b2b440b05b1018e99f639, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefab: {fileID: 3245112867525194609, guid: 561b3259e8fca9b4abda243fd4388caa, type: 3}
+  prefab: {fileID: 2874818625365576414, guid: 561b3259e8fca9b4abda243fd4388caa, type: 3}
   parent: {fileID: 1176317466}
   startPos: {x: 0, y: 0, z: 0}
 --- !u!1 &1176317465

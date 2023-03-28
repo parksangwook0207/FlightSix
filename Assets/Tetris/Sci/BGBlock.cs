@@ -26,4 +26,6 @@ public class BGBlock : MonoBehaviour
             text.text = "";
         }
     }
+
+   
 }

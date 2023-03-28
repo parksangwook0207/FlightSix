@@ -6,14 +6,16 @@ using UnityEngine.UI;
 public class BGController : MonoBehaviour
 {
     // 선생님과 같이한 거
-    [SerializeField] private GameObject prefab;
+    [SerializeField] private BGBlock prefab;
     [SerializeField] private Transform parent;
+
+    
 
 
     [HideInInspector] public Vector3 startPos;
 
 
-    public List<List<GameObject>> bgBlock = new List<List<GameObject>>();
+    public List<List<BGBlock>> bgBlock = new List<List<BGBlock>>();
 
     public int BlockXCnt { get; set; }
     public int BlockYCnt { get; set; }
@@ -26,11 +28,7 @@ public class BGController : MonoBehaviour
     {
         BlockXCnt = 10;
         BlockYCnt = 20;
-
-
-
         parent.GetComponent<GridLayoutGroup>().constraintCount = BlockXCnt;
-
         CreateBGBlock();
     }
 
@@ -38,10 +36,13 @@ public class BGController : MonoBehaviour
     {
         for (int i = 0; i < BlockYCnt; i++)
         {
-            bgBlock.Add(new List<GameObject>());
+            bgBlock.Add(new List<BGBlock>());
             for (int j = 0; j < BlockXCnt; j++)
             {
                 bgBlock[i].Add(Instantiate(prefab, parent));
+                bgBlock[i][j].Check = false;
+                bgBlock[i][j].Y = i;
+                bgBlock[i][j].X = j;
             }
         }
         StartCoroutine(Gridoff());

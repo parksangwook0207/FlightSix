@@ -7,7 +7,7 @@ public class BlockController : MonoBehaviour
     [SerializeField] List<GameObject> blocks;
     [SerializeField] Transform parent;
     [SerializeField] Transform finishB;
-    [SerializeField] GameObject overPanel;
+    //[SerializeField] GameObject overPanel;
     const int startPosY = 1;
 
     GameObject createObj;
@@ -19,7 +19,7 @@ public class BlockController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        overPanel.SetActive(false);
+        //overPanel.SetActive(false);
         bgCont = ControllerManager.Instance.bgCont;
     }
 
