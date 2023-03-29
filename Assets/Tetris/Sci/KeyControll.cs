@@ -30,5 +30,26 @@ public class KeyControll : MonoBehaviour
         {
             ControllerManager.Instance.blockCont.FindBlockMain().Down();
         }
+        else if (Input.GetKeyDown(KeyCode.Space))
+        {
+            autoDown = true;
+        }
+        autoDownTime += Time.deltaTime;
+        if (autoDown)
+        {
+            if (autoDownTime > 0.001f)
+            {
+                autoDownTime = 0;
+                ControllerManager.Instance.blockCont.FindBlockMain().Down();
+            }
+        }
+        else
+        {
+            if (autoDownTime > downTime)
+            {
+                autoDownTime = 0;
+                ControllerManager.Instance.blockCont.FindBlockMain().Down();
+            }
+        }
     }
 }

@@ -16,6 +16,8 @@ public class BlockController : MonoBehaviour
 
     BGController bgCont;
 
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -47,5 +49,69 @@ public class BlockController : MonoBehaviour
             }
         }
         return null;
+    }
+
+    public void SetParent()
+    {
+        for (int i = createObj.transform.childCount - 1; i >= 0; i--)
+        {
+            Transform t = createObj.transform.GetChild(i);
+            t.SetParent(finishB);
+            t.localRotation = Quaternion.Euler(Vector3.zero);
+
+            finishBlocks.Add(t.GetComponent<Block>());
+        }
+
+        Destroy(createObj);
+    }
+
+    public void XLineDelete()
+    {
+        List<int> delIndexs = new List<int>();
+        for (int i = bgCont.BlockYCnt - 1; i >= 0; i--)
+        {
+            if (LineCheck(i))
+            {
+                delIndexs.Add(i);
+            }
+        }
+
+        foreach (var y in delIndexs)
+        {
+            LineDelete(y);
+        }
+
+        foreach (var item in delIndexs)
+        {
+            Debug.Log("Del :" + item);
+        }
+
+
+    }
+
+    bool LineCheck(int y)
+    {
+        for (int x = 0; x < bgCont.BlockXCnt; x++)
+        {
+            if (bgCont.bgBlock[y][x].Check == false)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    void LineDelete(int y)
+    {
+        for (int i = finishBlocks.Count -1; i >= 0; i--)
+        {
+            Block b = finishBlocks[i];
+            if (b.y == y)
+            {
+                bgCont.bgBlock[b.y][b.x].Check = false;
+                Destroy(b.gameObject);
+                finishBlocks.Remove(b);
+            }
+        }
     }
 }

@@ -58,51 +58,93 @@ public class Block : MonoBehaviour
 
     public void Left()
     {
-        if (isMoveX(-1))
+        if (IsMoveX(-1))
         {
             Pos = new Vector2(Pos.x - 73, Pos.y);
             transform.parent.localPosition = Pos;
         }
-       
+
     }
     public void Right()
     {
-        if (isMoveX(1))
+        if (IsMoveX(1))
         {
             Pos = new Vector2(Pos.x + 73, Pos.y);
             transform.parent.localPosition = Pos;
         }
-       
+
     }
     public void Down()
     {
-        if (isMoveY())
+        if (IsCheckY() == true )
         {
             Pos = new Vector2(Pos.x, Pos.y - 73);
             transform.parent.localPosition = Pos;
         }
+        else
+        {
+            BlockDownFinish();
+            blockCont.SetParent();
+            blockCont.XLineDelete();
+            ControllerManager.Instance.KeyCont.autoDown = false;
+            blockCont.CreateBlock();
+        }
     }
-    bool isMoveX(int val)
+    bool IsMoveX(int val)
     {
         int count = 0;
         for (int i = 0; i < transform.parent.childCount; i++)
         {
             Block b = transform.parent.GetChild(i).GetComponent<Block>();
             int x = b.x + val;
-            if (x >= 0 && x <= bgCont.BlockXCnt - 1)
+            if (x >= 0 && x <= bgCont.BlockXCnt - 1 && bgCont.bgBlock[b.y][x].Check == false) 
                 count++;
         }
         return count == transform.parent.childCount ? true : false;
     }
-    bool isMoveY()
+    bool IsMoveY()
     {
         int count = 0;
         for (int i = 0; i < transform.parent.childCount; i++)
         {
             Block b = transform.parent.GetChild(i).GetComponent<Block>();
-            if (b.y + 1  <= bgCont.BlockYCnt - 1)
+            if (b.y + 1 <= bgCont.BlockYCnt)
+            {
+                continue;
+            }
+            if (bgCont.bgBlock[b.y][b.x].Check == false)
+            {
                 count++;
+            }
+
         }
         return count == transform.parent.childCount ? true : false;
+    }
+
+    bool IsCheckY()
+    {
+        int count = 0;
+        for (int i = 0; i < transform.parent.childCount; i++)
+        {
+            Block b = transform.parent.GetChild(i).GetComponent<Block>();
+
+            if (b.y + 1 >= bgCont.BlockYCnt)
+                 continue;
+            
+            if (bgCont.bgBlock[b.y + 1][b.x].Check == false)
+                count++;
+            
+            
+        }
+        return count == transform.parent.childCount ? true : false;
+    }
+
+    void BlockDownFinish()
+    {
+        foreach (Transform trans in transform.parent)
+        {
+            Block b = trans.GetComponent<Block>();
+            bgCont.bgBlock[b.y][b.x].Check = true; 
+        }
     }
 }
