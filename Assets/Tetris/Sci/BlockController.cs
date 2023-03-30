@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class BlockController : MonoBehaviour
 {
     [SerializeField] List<GameObject> blocks;
     [SerializeField] Transform parent;
     [SerializeField] Transform finishB;
+    [SerializeField] private TMP_Text blocktext;
     //[SerializeField] GameObject overPanel;
     const int startPosY = 1;
 
@@ -76,9 +78,14 @@ public class BlockController : MonoBehaviour
             }
         }
 
-        foreach (var y in delIndexs)
+        foreach (int y in delIndexs)
         {
             LineDelete(y);
+        }
+        delIndexs.Reverse();
+        foreach (var y in delIndexs)
+        {
+            LineDown(y);
         }
 
         foreach (var item in delIndexs)
@@ -103,7 +110,7 @@ public class BlockController : MonoBehaviour
 
     void LineDelete(int y)
     {
-        for (int i = finishBlocks.Count -1; i >= 0; i--)
+        for (int i = finishBlocks.Count - 1; i >= 0; i--)
         {
             Block b = finishBlocks[i];
             if (b.y == y)
@@ -111,7 +118,39 @@ public class BlockController : MonoBehaviour
                 bgCont.bgBlock[b.y][b.x].Check = false;
                 Destroy(b.gameObject);
                 finishBlocks.Remove(b);
+                blocktext.text += 10;
             }
+        }
+    }
+
+    void LineDown(int y)
+    {
+        for (int i = 0; i < finishBlocks.Count; i++)
+        {
+            Block b = finishBlocks[i];
+            if (b.y <= y - 1)
+            {
+                Vector2 vec2 = b.transform.localPosition;
+                b.transform.localPosition = new Vector2(vec2.x, vec2.y - b.SizeY);
+                b.y++;
+            }
+            MapReflush();
+        }
+    }
+
+    void MapReflush()
+    {
+        for (int y = 0; y < bgCont.BlockYCnt; y++)
+        {
+            for (int x = 0; x < bgCont.BlockXCnt; x++)
+            {
+                bgCont.bgBlock[y][x].Check = false;
+            }
+        }
+        for (int i = 0; i < finishBlocks.Count; i++)
+        {
+            Block b = finishBlocks[i];
+            bgCont.bgBlock[b.y][b.x].Check = true;
         }
     }
 }

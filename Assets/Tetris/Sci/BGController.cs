@@ -8,8 +8,9 @@ public class BGController : MonoBehaviour
     // 선생님과 같이한 거
     [SerializeField] private BGBlock prefab;
     [SerializeField] private Transform parent;
+    [SerializeField] private AudioSource audio;
 
-    
+
 
 
     [HideInInspector] public Vector3 startPos;
@@ -22,6 +23,8 @@ public class BGController : MonoBehaviour
 
     const int startYIndex = 1;
 
+    public float spacingX = 0;
+    public float spacingY = 0;
 
 
     void Start()
@@ -29,6 +32,8 @@ public class BGController : MonoBehaviour
         BlockXCnt = 10;
         BlockYCnt = 20;
         parent.GetComponent<GridLayoutGroup>().constraintCount = BlockXCnt;
+       
+
         CreateBGBlock();
     }
 
@@ -55,5 +60,9 @@ public class BGController : MonoBehaviour
         //startPos = bgBlock[startY]
         ControllerManager.Instance.blockCont.CreateBlock();
     }
-    
+
+    public void EffectSoundStart()
+    {
+        audio.Play();
+    }
 }

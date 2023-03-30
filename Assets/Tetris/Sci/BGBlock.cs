@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class BGBlock : MonoBehaviour
 {
+    // ÁÂÇ¥
     public bool Check { get; set; }
 
     public int X;

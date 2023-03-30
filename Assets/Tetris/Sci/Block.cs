@@ -9,6 +9,9 @@ public class Block : MonoBehaviour
 
     public bool main;
 
+    public float SizeX { get; set; }
+    public float SizeY { get; set; }
+
     public Vector2 Pos = new Vector2();
 
     BGController bgCont;
@@ -16,8 +19,15 @@ public class Block : MonoBehaviour
 
     void Start()
     {
-        bgCont = ControllerManager.Instance.bgCont;
+        SizeX = 50;
+        SizeY = 50;
+
+       bgCont = ControllerManager.Instance.bgCont;
         blockCont = ControllerManager.Instance.blockCont;
+
+        GetComponent<RectTransform>().sizeDelta = new Vector2(SizeX - bgCont.spacingX, SizeY - bgCont.spacingY);
+        Vector2 vec2 = GetComponent<RectTransform>().localPosition;
+        GetComponent<RectTransform>().localPosition = new Vector2((vec2.x / 73f) * SizeX, (vec2.y / 73f) * SizeY);
     }
 
     void Update()
@@ -60,7 +70,7 @@ public class Block : MonoBehaviour
     {
         if (IsMoveX(-1))
         {
-            Pos = new Vector2(Pos.x - 73, Pos.y);
+            Pos = new Vector2(Pos.x - SizeX, Pos.y);
             transform.parent.localPosition = Pos;
         }
 
@@ -69,7 +79,7 @@ public class Block : MonoBehaviour
     {
         if (IsMoveX(1))
         {
-            Pos = new Vector2(Pos.x + 73, Pos.y);
+            Pos = new Vector2(Pos.x + SizeX, Pos.y);
             transform.parent.localPosition = Pos;
         }
 
@@ -78,7 +88,7 @@ public class Block : MonoBehaviour
     {
         if (IsCheckY() == true )
         {
-            Pos = new Vector2(Pos.x, Pos.y - 73);
+            Pos = new Vector2(Pos.x, Pos.y - SizeY);
             transform.parent.localPosition = Pos;
         }
         else
@@ -144,7 +154,9 @@ public class Block : MonoBehaviour
         foreach (Transform trans in transform.parent)
         {
             Block b = trans.GetComponent<Block>();
-            bgCont.bgBlock[b.y][b.x].Check = true; 
+            bgCont.bgBlock[b.y][b.x].Check = true;
         }
+
+        bgCont.EffectSoundStart();
     }
 }
