@@ -32,7 +32,8 @@ public class BGController : MonoBehaviour
         BlockXCnt = 10;
         BlockYCnt = 20;
         parent.GetComponent<GridLayoutGroup>().constraintCount = BlockXCnt;
-       
+        spacingX = parent.GetComponent<GridLayoutGroup>().spacing.x;
+        spacingY = parent.GetComponent<GridLayoutGroup>().spacing.y;
 
         CreateBGBlock();
     }

@@ -19,8 +19,8 @@ public class Block : MonoBehaviour
 
     void Start()
     {
-        SizeX = 50;
-        SizeY = 50;
+        SizeX = 33;
+        SizeY = 33;
 
        bgCont = ControllerManager.Instance.bgCont;
         blockCont = ControllerManager.Instance.blockCont;
@@ -141,7 +141,7 @@ public class Block : MonoBehaviour
             if (b.y + 1 >= bgCont.BlockYCnt)
                  continue;
             
-            if (bgCont.bgBlock[b.y + 1][b.x].Check == false)
+            if (bgCont.bgBlock[b.y +1][b.x].Check == false)
                 count++;
             
             

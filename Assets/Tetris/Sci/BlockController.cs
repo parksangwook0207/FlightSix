@@ -18,6 +18,8 @@ public class BlockController : MonoBehaviour
 
     BGController bgCont;
 
+    int score = 0; 
+
 
 
     // Start is called before the first frame update
@@ -25,6 +27,7 @@ public class BlockController : MonoBehaviour
     {
         //overPanel.SetActive(false);
         bgCont = ControllerManager.Instance.bgCont;
+        blocktext.text = $"점수:{score}";
     }
 
     public void CreateBlock()
@@ -118,9 +121,10 @@ public class BlockController : MonoBehaviour
                 bgCont.bgBlock[b.y][b.x].Check = false;
                 Destroy(b.gameObject);
                 finishBlocks.Remove(b);
-                blocktext.text += 10;
             }
         }
+        score += 100;
+        blocktext.text = $"점수:{score}";
     }
 
     void LineDown(int y)
@@ -152,5 +156,11 @@ public class BlockController : MonoBehaviour
             Block b = finishBlocks[i];
             bgCont.bgBlock[b.y][b.x].Check = true;
         }
+    }
+    public void SetScore()
+    {
+        PlayerPrefs.SetInt("score", score);
+
+        score = PlayerPrefs.GetInt("score");
     }
 }

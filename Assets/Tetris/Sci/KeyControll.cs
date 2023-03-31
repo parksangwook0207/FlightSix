@@ -11,20 +11,20 @@ public class KeyControll : MonoBehaviour
     float autoDownTime = 0;
     float keyMoveDelay = 0f;
     // Update is called once per frame
-    
+
     public void Update()
     {
         keyMoveDelay += Time.deltaTime;        if (Input.GetKeyDown(KeyCode.UpArrow))
         {
-            ControllerManager.Instance.blockCont.FindBlockMain().Rotate();
+             Rotata();
         }
         else if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
-            ControllerManager.Instance.blockCont.FindBlockMain().Left();
+            KeyLeft();
         }
         else if (Input.GetKeyDown(KeyCode.RightArrow))
         {
-            ControllerManager.Instance.blockCont.FindBlockMain().Right();
+            KeyRight();
         }
         else if (Input.GetKeyDown(KeyCode.DownArrow))
         {
@@ -51,5 +51,23 @@ public class KeyControll : MonoBehaviour
                 ControllerManager.Instance.blockCont.FindBlockMain().Down();
             }
         }
+    }
+
+    public void KeyLeft()
+    {
+        ControllerManager.Instance.blockCont.FindBlockMain().Left();
+    }
+    public void KeyRight()
+    {
+        ControllerManager.Instance.blockCont.FindBlockMain().Right();
+    }
+    public void Rotata()
+    {
+        ControllerManager.Instance.blockCont.FindBlockMain().Rotate();
+    }
+
+    public void Down()
+    {
+        autoDown = true;
     }
 }
